@@ -3,8 +3,8 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.zendesk</groupId>
-  <artifactId>maxwell</artifactId>
-  <version>1.0.0-RC1</version>
+  <artifactId>maxwell_sqs</artifactId>
+  <version>1.0.0-RC1-SQS</version>
   <packaging>jar</packaging>
 
   <name>maxwell</name>
@@ -96,6 +96,12 @@
       <groupId>com.vividsolutions</groupId>
       <artifactId>jts</artifactId>
       <version>1.13</version>
+    </dependency>
+       <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-sqs</artifactId>
+      <version>1.10.58</version>
+      <optional>false</optional>
     </dependency>
   </dependencies>
 
