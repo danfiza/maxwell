@@ -97,9 +97,15 @@
       <artifactId>jts</artifactId>
       <version>1.13</version>
     </dependency>
-       <dependency>
+    <dependency>
       <groupId>com.amazonaws</groupId>
       <artifactId>aws-java-sdk-sqs</artifactId>
+      <version>1.10.58</version>
+      <optional>false</optional>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-java-sdk-sns</artifactId>
       <version>1.10.58</version>
       <optional>false</optional>
     </dependency>

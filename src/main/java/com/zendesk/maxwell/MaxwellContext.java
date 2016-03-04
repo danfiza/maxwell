@@ -175,6 +175,8 @@ public class MaxwellContext {
 			return new ProfilerProducer(this);
 		case "sqs":
 			return new SQSProducer(this);
+		case "sns":
+			return new SNSProducer(this);
 		case "stdout":
 		default:
 			return new StdoutProducer(this);
