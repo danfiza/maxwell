@@ -1,38 +1,28 @@
 package com.zendesk.maxwell.producer;
 
-import java.util.List;
-import java.util.Map.Entry;
-
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.Region;
 import com.amazonaws.regions.Regions;
-import com.amazonaws.services.sqs.AmazonSQS;
 import com.amazonaws.services.sqs.AmazonSQSClient;
-import com.amazonaws.services.sqs.model.CreateQueueRequest;
-import com.amazonaws.services.sqs.model.DeleteMessageRequest;
-import com.amazonaws.services.sqs.model.DeleteQueueRequest;
-import com.amazonaws.services.sqs.model.Message;
-import com.amazonaws.services.sqs.model.ReceiveMessageRequest;
 import com.amazonaws.services.sqs.model.SendMessageRequest;
-import com.zendesk.maxwell.MaxwellAbstractRowsEvent;
 import com.zendesk.maxwell.MaxwellContext;
 import com.zendesk.maxwell.RowMap;
-import com.zendesk.maxwell.producer.AbstractProducer;
 
 public class SQSProducer extends AbstractProducer {
+	
+	AmazonSQSClient sqs;
+	Region region;
+	AWSCredentials credentials;
+	
+	
 	public SQSProducer(MaxwellContext context) {
 		super(context);
-	}
-
-	@Override
-	public void push(RowMap r) throws Exception {
 		
-		AWSCredentials credentials = null;
         try {
-            credentials = new ProfileCredentialsProvider().getCredentials();
+            this.credentials = new ProfileCredentialsProvider().getCredentials();
         } catch (Exception e) {
             throw new AmazonClientException(
                     "Cannot load the credentials from the credential profiles file. " +
@@ -41,10 +31,14 @@ public class SQSProducer extends AbstractProducer {
                     e);
         }
 
-        AmazonSQS sqs = new AmazonSQSClient(credentials);
-        Region usWest2 = Region.getRegion(Regions.US_WEST_2);
-        sqs.setRegion(usWest2);
-        
+        this.sqs = new AmazonSQSClient(credentials);
+        this.region = Region.getRegion(Regions.US_WEST_2);
+        this.sqs.setRegion(region);
+	}
+
+	@Override
+	public void push(RowMap r) throws Exception {
+		        
         try {
 
             // Send a message
